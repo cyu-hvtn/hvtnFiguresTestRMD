@@ -251,7 +251,7 @@ case <- pt_plot(dat=lum,
               colby = "trt01p",
               rx.ctrl = "P",
               y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "The most typical boxplot figure. Only showing the first two pages (test.pages = 1:2).",
+              page.footnote = "Standard boxplot figure. Only showing the first two pages (test.pages = 1:2).",
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -290,7 +290,7 @@ case <- pt_plot(dat=lum,
               colby = "trt01p",
               rx.ctrl = "P",
               y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "The most typical lineplot figure. Dots connected by ptid.\nx-axis labels are: Visit 5, Visit 7, Visit 11, (as x.lb=\"Visit %%s\").\nPage title showing correctly (underscore is special character in latex titles. Only showing the first page (test.pages = 1).",
+              page.footnote = "Standard lineplot figure. Dots connected by ptid.\nx-axis labels are: Visit 5, Visit 7, Visit 11, (as x.lb=\"Visit %%s\").\nPage title showing correctly (underscore is special character in latex titles. Only showing the first page (test.pages = 1).",
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -313,40 +313,6 @@ pt_draw(case)
 ```
 
 
-```{r results="asis", eval = doctype != "docx"}
-fig_num <- fig_num + 1
-case <- pt_plot(dat=lum, 
-              plotby="antigen",
-              xvar="trt01p",
-              yvar="delta",
-              pts="pub_id",
-              resp="response",
-              pageby = c("isotype", "visitno"),
-              plot.title = "%s",
-              colby = "trt01p",
-              rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Testing pt_draw() feature: only showing pages 2 & 3 (pt_draw(.., 2:3))",
-              cutoff.lower=100,
-              cutoff.upper=22000,
-              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
-              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)))
-
-
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
-                       caption_short="lineplot (pos. response boxplots)")
-
-fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
-                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
-```
-
-
-```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
-#  By default pt_draw will draw all pages
-pt_draw(case, 2:3)
-
-```
-
 
 
 ```{r results="asis", eval = doctype != "docx"}
@@ -367,7 +333,7 @@ case <- pt_plot(dat=lum,
               # cutoff.upper=22000,
               # y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
               # y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
-              test.pages = 1:2)
+              test.pages = 1:3)
 
 
 tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
@@ -458,13 +424,13 @@ case <- pt_plot(dat=lum,
               pts="pub_id",
               lineby="pub_id",
               resp="response",
-              resp.plot=F,
+              mag.plot=F,
               pageby = c("isotype", "antigen"),
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
               y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Showing magnitude lineplots only (resp.plot=F). Dots are connected. Total and RESPONDER counts are shown on top of the plots. Plot titles are shown.",
+              page.footnote = "Showing response rate barplots only (mag.plot=F). Dots are connected.\nTotal and RESPONDER counts are shown on top of the plots. Plot titles are shown.",
               test.pages = 1)
 
 
@@ -751,6 +717,127 @@ fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
 pt_draw(case)
 
 ```
+
+
+
+```{r results="asis", eval = doctype != "docx"}
+fig_num <- fig_num + 1
+case <- pt_plot(dat=lum, 
+              xvar="trt01p",
+              groupby = "antigen",
+              yvar="delta",
+              pts="pub_id",
+              resp="response",
+              pageby = c("isotype", "visitno"),
+              plot.title = "%s",
+              resp.bar = 1, 
+              box.col = "white",
+              colby = "trt01p",
+              rx.ctrl = "P",
+              y.title = "%s binding antibody units (MFI-blank)",
+              page.footnote = "Only showing individual magnitude dots, no boxplots (box.col=\"white\")",
+              cutoff.lower=100,
+              cutoff.upper=22000,
+              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
+              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
+              test.pages = 1)
+
+
+
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+                       caption_short="boxplot (pos. response boxplots)")
+
+fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
+                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
+```
+
+
+```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
+#  By default pt_draw will draw all pages
+pt_draw(case)
+
+```
+
+
+```{r results="asis", eval = doctype != "docx"}
+fig_num <- fig_num + 1
+case <- pt_plot(dat=lum, 
+              xvar="trt01p",
+              groupby = "antigen",
+              yvar="delta",
+              pts="pub_id",
+              resp="response",
+              pageby = c("isotype", "visitno"),
+              plot.title = "%s",
+              resp.bar = 1, 
+              box.col = "white",
+              colby = "trt01p",
+              rx.ctrl = "P",
+              y.title = "%s binding antibody units (MFI-blank)",
+              page.footnote = "Only showing individual magnitude dots, no boxplots (box.col=\"white\")",
+              cutoff.lower=100,
+              cutoff.upper=22000,
+              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
+              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
+              test.pages = 1)
+
+
+
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+                       caption_short="boxplot (pos. response boxplots)")
+
+fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
+                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
+```
+
+
+```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
+#  By default pt_draw will draw all pages
+pt_draw(case)
+
+```
+
+
+
+
+```{r results="asis", eval = doctype != "docx"}
+fig_num <- fig_num + 1
+case <- pt_plot(dat=lum, 
+              xvar="visitno",
+              groupby = "trt01p",
+              yvar="delta",
+              pts="pub_id",
+              lineby="pub_id",
+              resp="response",
+              pageby = c("isotype", "antigen"),
+              plot.title = "%s",
+              colby = "trt01p",
+              rx.ctrl = "P",
+              y.title = "%s binding antibody units (MFI-blank)",
+              page.footnote = "Grouped rotating x labels ",
+              cutoff.lower=100,
+              cutoff.upper=22000,
+              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
+              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
+              x.lb="Month %s",
+              x.lb.angle = 45,
+              test.pages = 1)
+
+
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+                       caption_short="lineplot (pos. response boxplots)")
+
+fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
+                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
+```
+
+
+```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
+#  By default pt_draw will draw all pages
+pt_draw(case)
+
+```
+
 
 \elandscape
 \memoformat
