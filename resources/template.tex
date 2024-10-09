@@ -1,0 +1,208 @@
+% -------------------------------------------------------------------------------------------------
+% Creation date: 08May2018
+% Author: Anthony Williams
+% This is a latex template designed to mimic to HVTN PT Reports.
+% It's intended to be used with Rmarkdown to generate single-document reports.
+% -------------------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+% Current PT report margins are as follows:
+% Top = 1in, bottom = 0.5in, left/right = 0.75in.
+% Title page: Top/bottom Logo goes another 0.5in,
+% Other pages: footer = addition 0.25 in, header = 0.5 in
+\usepackage[margin=0.75in, top=0.5in, bottom=1in, includeheadfoot]{geometry} % for margins
+\usepackage[dvipsnames]{xcolor} % for line colors, argument for using more color names
+\usepackage{colortbl} % for coloring table lines
+\usepackage{fancyhdr} % for headers and footers
+\usepackage{graphicx} % for images
+\usepackage{fontspec} % to use different fonts
+\IfFontExistsTF{Arial}{\setmainfont{Arial}}{\setmainfont{Open Sans}}
+\usepackage{lastpage} % For page number
+\usepackage{pdflscape} % for landscape pages
+\usepackage[absolute]{textpos} % for rotating landscape header/footers
+\usepackage{longtable} % for longtables
+\usepackage{booktabs} % for \toprule
+\usepackage{caption} % for manipulating table captions.
+\usepackage{hyphenat} % handle hyphens correctly, keeps from running into margins
+\usepackage{tabu}
+\usepackage{threeparttable} % for long footnotes
+\usepackage{threeparttablex}
+\usepackage{hyperref} % for URLs in bibliography
+\usepackage[citestyle=authoryear-comp,natbib=true]{biblatex}
+\usepackage{titlesec}
+\usepackage{float}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+% Add this to handle CSLReference dependency introduced in Pandoc v2.8+
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{CSLReferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
+$endif$
+
+\bibliography{$bibliography$}
+
+\setlength\parindent{0pt} % no paragraph indentation
+\setlength{\parskip}{12pt} % blank line between each paragraph
+
+
+% ------------------------------------------------------------------------------
+% Define commands here
+% ------------------------------------------------------------------------------
+% This avoids a tightlist pandoc error
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% This is for vertical spacing between memo header table
+\renewcommand{\arraystretch}{1.5}
+
+% This command is basically hrullfill, but makes the width dynamic.
+% For use with the first footer rule, since it's different than the other header/footer rules
+\newcommand*\varhrulefill[1][2pt]{\leavevmode\leaders\hrule height#1\hfill\kern0pt}
+
+% This is for resetting normal page margins from within the Rmarkdown document.
+% Otherwise we can only change geometry before or after the Rmd text.
+\newcommand{\memogeo}{\newgeometry{margin=0.75in, top=0.5in, includeheadfoot}}
+\newcommand{\tlfgeo}{\newgeometry{margin=0.25in, top=0in, includeheadfoot}}
+\newcommand{\figmargins}{%
+  \newgeometry{margin=-1.5in, bottom=0in, left=0in, includeheadfoot}
+}
+
+% These commands apply the geometries define above anywhere within the Rmd
+\newcommand{\memoformat}{%
+  \memogeo
+  \pagestyle{memopage}
+}
+
+\newcommand{\tlf}{%
+  \tlfgeo
+  \pagestyle{tlfpage}
+}
+
+% Commands for creating landscape pages. Eventually we can define a style for landscape pages
+% Hopefully that will allow us to put use headers/footers/page numbers
+\newcommand{\blandscape}{\begin{landscape}\pagestyle{landscapepage}}
+\newcommand{\elandscape}{\end{landscape}}
+
+% Header and Footer -------
+
+% The bulk of the HVTN PT report format is in the headers and footers. Specifically,
+% the first pages header and footer images. Here we create two page styles, for the
+% first and subsequent pages, respectively.
+
+% First page style
+\fancypagestyle{memohead}{%
+
+  \fancyhf{}% Clear all headers/footers
+
+  \fancyhead[L]{\fontsize{20}{12} \selectfont \bf{MEMORANDUM}}% Header
+  \renewcommand{\headrulewidth}{2pt}% 2pt header rule
+  \renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{Tan}\leaders\hrule height \headrulewidth\hfill}}
+
+  \renewcommand{\footrulewidth}{0pt} % Remove default foot rule
+  % Footer is actually a combination of left, center, and right footers.
+  \fancyfoot[LE,LO]{~\\{\color{Tan}\varhrulefill}\\~\\\fontsize{10}{12} \selectfont 1100 Fairview Ave N - LE-400 - PO Box 19024 - Seattle, WA 98109-1024 - (206) 667-7000 - (206) 667-4812 Fax}% Footer}
+  \fancyfoot[CE,CO]{\includegraphics[width=2in]{resources/fhcrc.jpg}\\{\color{Tan}\varhrulefill}\\~}
+  \fancyfoot[RE,RO]{~\\{\color{Tan}\varhrulefill}\\\fontsize{10}{12} \selectfont Page \thepage\ of \pageref{LastPage}}
+
+  % Add figures to memo header
+  \chead{\includegraphics[width=1.5in]{resources/hvtn.jpg}}
+  \rhead{\includegraphics[width=2in]{resources/scharp.jpg}}
+} % end of fancypagestyle{memohead}
+
+% Subsequenct page styles
+\fancypagestyle{memopage}{%
+
+  % less spacing around memo section headers
+  \titlespacing*{\subsection}
+  {0pt}{0pt}{0pt}
+
+  \fancyhf{}% Clear all headers/footers
+
+  \fancyhead[R]{\fontsize{20}{12} \selectfont \bf{Memorandum, continued}}
+
+  \fancyfoot[R]{\fontsize{10}{12} \selectfont Page \thepage\ of \pageref{LastPage}}
+ \fancyfoot[C]{\fontsize{10}{12} \selectfont ~ \\ \fontsize{10}{12} \selectfont 1100 Fairview Ave N - LE-400 - PO Box 19024 - Seattle, WA 98109-1024 - (206) 667-7000 - (206) 667-4812 Fax}% Footer
+
+  % Header line
+  \renewcommand{\headrulewidth}{2pt}% 2pt header rule
+  \renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{Tan}\leaders\hrule height \headrulewidth\hfill}}
+
+  % Footer line
+  \renewcommand{\footrulewidth}{2pt}% 2pt footer rule
+  \renewcommand{\footrule}{\hbox to\headwidth{%
+    \color{Tan}\leaders\hrule height \footrulewidth\hfill}}
+} % end of fancypagestyle{normalpage}
+
+\fancypagestyle{tlfpage}{%
+  \fancyhf{}% clear all headers/footers
+  % Header line
+  \renewcommand{\headrulewidth}{2pt}% 2pt header rule
+  % Footer line
+  \renewcommand{\footrulewidth}{2pt}% 2pt footer rule
+   \renewcommand{\footrulewidth}{0pt}% footer rule
+  \renewcommand{\headrulewidth}{0pt}% header rule
+   \fancyfoot[R]{\fontsize{10}{12} \selectfont Page \thepage\ of \pageref{LastPage}}% Footer
+}
+
+% Set footer for landscape pages. We only need the page number because these are TLFs.
+\fancypagestyle{landscapepage}{%
+  \fancyhf{}
+  \renewcommand{\footrulewidth}{0pt}% footer rule
+  \renewcommand{\headrulewidth}{0pt}% header rule
+}
+
+\setlength{\headheight}{20pt} % This adds space between the header line and body text.
+\setlength{\footskip}{20pt} % this is the same for footers, but haven't figured out how it works.
+
+%%% If debugging the template.tex file, remove these if statements!!! ------
+%%% -----------------------------------------------------------------------
+%This removes some shading warning when inserting code in Rmarkdown
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+% Remove numbered sections
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+% ---------------------------------------------------------------------------
+
+% End of premable -----
+
+\begin{document}
+
+\pagestyle{memopage} % Set header/footers for all pages
+\thispagestyle{memohead} % Add memo header and line on first page
+
+% Memo header table.
+% Need the color statement for vertical bars, according to colortbl documentation
+\vspace*{1cm} % need the * so it doesn't get deleted
+\noindent\begin{tabular}{!{\color{Tan}\vline} p{0.5in} !{\color{Tan}\vline} p{6.15in} !{\color{Tan}\vline}}
+  \arrayrulecolor{Tan}\hline
+  \bf{Date:} & {$date$} \\
+  \arrayrulecolor{Tan}\hline
+  \bf{To:} & {$for(to)$$to$$sep$, $endfor$} \\
+  \arrayrulecolor{Tan}\hline
+  \bf{From:} & {$for(from)$$from$$sep$, $endfor$} \\
+  \arrayrulecolor{Tan}\hline
+  \bf{RE:} & {$re$} \\
+  \arrayrulecolor{Tan}\hline
+\end{tabular}
+\renewcommand{\arraystretch}{1} % Reset row spacing
+
+$body$
+
+\end{document}

@@ -1,0 +1,46 @@
+<!-- ## ACKNOWLEDGEMENTS    -->
+
+<!-- <!--- BAMA - Tomaras ---> 
+<!-- We thank Derrick Goodman, DeAnna Tenney, Sarah Mudrak, LaTonya Williams, Yong Lin, Jack Heptinstall, Lu Zhang, Nicole Yates, Kelly Seaton, Lisa Sanders, Kristy Long, Sheetal Sawant, Angelina Sharak, David Beaumont, Mark Sampson, Judith Lucas, Michael Archibald, and Marcella Sarzotti-Kelsoe. We would also like to thank Anisa Gravelle, Ellie Hands, Anthony Williams, and Rafael Kuttner. -->
+
+<!-- Derrick Goodman, DeAnna Tenney, Sheetal Sawant, Jack Heptinstall, Lu Zhang, Sarah Mudrak, LaTonya Williams, Kelly Seaton, David Beaumont, Mark Sampson, Judith Lucas, Angelina Sharak, and Marcella Sarzotti-Kelsoe and the Janssen laboratory working group team -->
+## REFERENCES
+
+<!--- automatically generate bibliography from references cited in memo [e.g. @tomaras2008]. use Pandoc commands to place here --->
+<!-- <div id="refs"></div> -->
+
+<!-- \leavevmode\hypertarget{ref-liu2018}{}% -->
+<!-- Tomaras GD, Yates NL, Liu P, Qin L, et al. 2008. “Initial B-cell responses to transmitted human immunodeficiency virus type 1: Virion-Binding Immunoglobulin M (IgM) and IgG Antibodies Followed by Plasma Anti-gp41 Antibodies with Ineffective Control of Initial Viremia." \emph{J Virol.} Dec. 82(24):12449-63.      -->
+
+<!-- \leavevmode\hypertarget{ref-liu2018}{}% -->
+<!-- Yates NL, Liao H, Fong Y, Camp A et al. 2014. "Vaccine-Induced EnV V1/V2 IgG3 Correlates with Lower HIV-1 Infection Risk and Declines Soon After Vaccination." \emph{Sci Transl Med.} Mar 19;6(228):228ra39.PMCID:PMC4116665.    -->
+
+<!-- \leavevmode\hypertarget{ref-liu2018}{}% -->
+<!-- Yates NL, decamp AC, Korber BT, Liao HX, et al. 2018. "HIV-1 Envelope Glycoproteins from Diverse Clades Differentiate Antibody Responses and Durability among Vaccinees." \emph{J Virol.}. Jan 31. Pii:JVI.01843-7. DOI:10.1128/JVI.01843-17. -->
+
+<!-- \leavevmode\hypertarget{ref-lumley2020}{}% -->
+<!-- Lumley T. 2020. “survey: analysis of complex survey samples.” \emph {R package version 4.0}.   -->
+
+<!-- \leavevmode\hypertarget{ref-lumley2020}{}% -->
+Liu Q, Li C, Wanga V, Shepherd BE. Covariate-adjusted Spearman's rank correlation with probability-scale residuals. Biometrics. 2018 Jun;74(2):595-605.
+
+Tay MZ, Liu P, Williams LD, et al. Antibody-Mediated Internalization of Infectious HIV-1 Virions Differs among Antibody Isotypes and Subclasses. PLoS Pathog. 2016;12(8):e1005817.
+
+Tomaras GD, Yates NL, Liu P, et al. Initial B-cell responses to transmitted human immunodeficiency virus type 1: virion-binding immunoglobulin M (IgM) and IgG antibodies followed by plasma anti-gp41 antibodies with ineffective control of initial viremia. J Virol. 2008;82(24):12449-12463.
+
+Haynes BF, Gilbert PB, McElrath MJ, et al. Immune-correlates analysis of an HIV-1 vaccine efficacy trial. N Engl J Med. 2012;366(14):1275-1286.
+
+Yates NL, Liao HX, Fong Y, et al. Vaccine-induced Env V1-V2 IgG3 correlates with lower HIV-1 infection risk and declines soon after vaccination. Sci Transl Med. 2014;6(228):228ra39.
+
+Zolla-Pazner S, deCamp A, Gilbert PB, et al. Vaccine-induced IgG antibodies to V1V2 regions of multiple HIV-1 subtypes correlate with decreased risk of HIV-1 infection. PLoS One. 2014;9(2):e87572. 
+
+Liao HX, Bonsignori M, Alam SM, et al. Vaccine induction of antibodies against a structurally heterogeneous site of immune pressure within HIV-1 envelope protein variable regions 1 and 2. Immunity. 2013;38(1):176-186.
+
+Yates NL, deCamp AC, Korber BT, et al. HIV-1 Envelope Glycoproteins from Diverse Clades Differentiate Antibody Responses and Durability among Vaccinees. J Virol. 2018;92(8):e01843-17. 
+
+
+<!-- \end{CSLReferences} -->
+*SOURCE: SCHARP `r Sys.getenv("USER")` `r getwd()` `r paste(R.version[c("major", "minor")], collapse = ".")` `r format(Sys.time(), "%d%b%y %H:%M")`* 
+
+
+\tlf

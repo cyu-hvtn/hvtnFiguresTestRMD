@@ -1,0 +1,118 @@
+<!---
+This is where the memo text goes that will be compiled into the final report. Lab additions
+can be tracked through word documents, but this document should be version-controlled and
+committed each time there are edits.
+--->
+
+## EXECUTIVE SUMMARY
+This file is used for testing the hvtnFigures package. Please download the hvtnFigures first.
+`devtools::install_github("FredHutch/hvtnFigures", auth_token = auth_token)`
+
+
+
+In general, all plots should meet the criteria below:
+
+1. Each figure should be centered in the page, no cutoffs, no overlaps, no misalignments.
+
+2. The figure matches the description in the footnote.
+
+3. The figure numbers should be continuous. Missing figure numbers indicate hidden bugs/errors.
+
+4. No missing parts in the figures. (e.g. the boxes are imcomplete. Missing borders indicate narrow space between boxes and could be adjusted by box.width). Page titles are shown and complete (i.e., figure number and caption.)
+
+5. The response summary counts match the plots. 
+
+6. The legends are showing the correct colors/shapes in the correct order.
+
+
+## BACKGROUND  
+
+
+
+<Add background text here>
+
+\memoformat <!--- IMPORTANT!!!
+In the latex template.tex, page 1 has different margins than others to fit images.
+This command resets the margins to normal size for pages after the first page.
+It's defined in template.tex.
+Move \memoformat tag to the last section that fits comfortably on the first page. --->
+
+## SCHEMA   
+
+| Column 1| Column 2 | Column 3 |  
+|-------|-----|------|
+| 1     | A   |   -  |
+| 2     | B   |   -  |
+| 3     | C   |   -  | 
+
+<!--- refer to assay-specific templates for endpoints, lab, and stat methods --->
+## ENDPOINTS  
+The frequency and magnitude of <!--- list isotypes, such as IgA, IgG and IgG3 ---> binding antibody responses were measured by the HIV-1 binding antibody multiplex assay (BAMA)  from <!--- specimen type, such as mucosal, serum, or plasma---> specimens obtained at months <!--- list months ---> (ie, visits <!--- list corresponding visit numbers --->) corresponding to <!--- specify the timing in relationship to enrollment or vaccinations e.g. corresponding to enrollment, 2 weeks after the 1st vaccination and 2 weeks after the 2nd vaccination --->. 
+
+<!--- If this is an updated report, include what additional data and/or analysis were done since the previous report (e.g. additional visits, additional ppts (include #s), additional viral isolates, additional assays (TZM.bl, A3R5), etc). --->
+ 
+## LAB METHODS  
+<!--- Serum or Plasma (or mucosal type) ---> HIV-1-specific <!--- insert isotypes ---> responses (<!--- insert dilution --->) against <!--- there are a few options here: list antigens if only a few, or summarize if the list is longer; include antigen descriptions (including clade) if only 1 antigen tested, otherwise write out descriptions below ---> were measured on a Bio-Plex instrument (Bio-Rad) using a standardized custom HIV-1 Luminex assay [@tomaras2008; @haynes_rv144_corr; @yates_vaccine_induced_2014; @zolla_pazner_2014; @yates2018 <!--- if IgA, include ;@tomaras2013 --->].  The readout was background-subtracted mean fluorescence intensity (MFI), where background referred to a plate level control (i.e., a blank well run on each plate).  Standard positive and negative controls were included in each assay to ensure specificity and for maintaining consistency and reproducibility between assays. The positive control includes an IgA control <!--- if an IgA assay ---> purified polyclonal IgG from HIV subjects (HIVIG) using a 10-point standard curve (4PL fit) <!--- if V1V2 antigens then state "and CH58 V1V2 IgG [@liao_vaccine_2013]". --->  <!--- If a positive standard curve was used, mention here. --->  <!--- If titrations were done, describe standard curve (i.e., serum titrations (1:40- 1:40,000) were performed to provide a sample within the linear range of the standard curve for calculating AUC and EC50 titers.) ---> The negative controls were NHS (HIV-1 sero-negative human sera) and blank beads.  <!--- If applicable, describe additional monoclonal antibodies used as control in the standard curve experiments to calculate antigen-specific titers in the samples. --->  
+
+<!---Include if titration data are presented---> Samples were titrated for <!---list isotypes and antigens, e.g. IgG to Con 6 gp120 and Con S gp41---> at the month <!---list month(s), e.g. 6.5---> timepoint, with an <!---Fill in for your study, often 5--->-fold dilution series of <!---list dilutions for your protocol, e.g. 1:50, 1:250, and 1:1250--->. The readout was background-subtracted mean fluorescence intensity (MFI), where background referred to a plate level control (i.e., a blank well run on each plate). 
+
+<!--- mucosal only ---> Total antibody (IgA or IgG) was measured using Bio-Rad Total Antibody analysis (on a Bio-Rad Bio-Plex instrument) for each mucosal fluid to calculate specific activity per sample [@yates2013; @seaton2014_vag_iga;@archary2016].
+
+
+Several criteria were used to determine if data from an assay were acceptable and could be statistically analyzed.  <!--- update visit window language as needed, e.g. if out of window durability timepoints are analyzed --->First, the blood draw date must have been within the allowable visit window as determined by the protocol. <!--- If applicable, i.e. if typical HVTN trial include this sentence ---> Post-acquisition samples from participants who acquired HIV are excluded. <!--- --->   Second, if the blank bead negative control exceeded 5,000 MFI, the sample was repeated. If the repeat value exceeded <!--- usually 5,000, but check ---> MFI, the sample was excluded from analysis due to high background. The preset assay criteria for sample reporting were: coefficient of variation (CV) per duplicate values for each sample are < 20% and <!--- may paste in ≥ or $\geq$ or unicode 2265 for greater than or equal to---> $\geq$ 50 beads counted per sample. To control for protein performance, the preset criteria include that the positive control titration in each assay must be within +/- 3 standard deviations of the mean for each antigen (tracked with a Levey-Jennings plot for high MFI and Area Under the Curve (AUC)).
+
+<!--- update visit window language as needed, e.g. if out of window durability timepoints are analyzed --->
+Data from blood draw dates outside the allowable visit window and assay results deemed unreliable for analysis by the lab were excluded from the analysis.  <!--- If applicable, i.e. if typical HVTN trial include this sentence ---> Post-infection samples from HIV-infected participants are excluded. <!--- ---> 
+
+## STATISTICAL METHODS  
+
+<!--- This section includes language for standard BAMA analyses. Compare to your SAP. --->
+
+The analysis in this report was carried out in accordance with SAP version X.X.
+
+<!--- Serum/plasma ---> <!--- Positivity criteria vary by antigen, but the following language generally applies. ---> Samples from post-enrollment visits were declared to have positive responses if they met three conditions: (1) the MFI minus Blank values were <!--- may use ≥ or $\geq$ or unicode 2265 for greater than or equal to---> $\geq$ antigen-specific cutoff at the <!--- add the dilution level ---> dilution level (based on <!--- confirm criteria ---> the 95th percentile of baseline samples as calculated by SAS PROC UNIVARIATE default method, and at least 100 MFI), (2) the MFI minus Blank values were greater than 3 times the baseline (day 0) MFI minus Blank values, and (3) the MFI values were greater than 3 times the baseline MFI values.  
+
+<!--- AUTC ---> Area under the titration curve (AUTC) was calculated for each sample, isotype, and antigen using the trapezoidal rule, where the x-axis is log10 of dilution and the y-axis is truncated Net MFI with negative values set to 0 <!---Note, lab may specify other truncation rules depending on what they see in the data; update as needed---> for the calculation. AUTC was not calculated for any samples which were incompletely titrated, or where a dilution was missing due to failing QC criteria. The response call described above was derived from dilution <!---list dilution, typically the smallest (screening) dilution but may be different, e.g. 1:50--->.
+
+<!--- Mucosal ---> Mucosal binding antibody magnitude was quantified in terms of specific activity (SA). Here SA was defined as MAX(0.0002,MFI-Blank*dilution/total antibody concentration), where total antibody concentration is in <!--- usually ng/mL but confirm for each study --->. Samples from post-enrollment visits were declared to have positive responses if they met three conditions:  1) SA > 95th percentile of SA from unvaccinated samples from HVTN protocols <!--- confirm ---> 076, 086, 088, 096, 097, and 205 combined, 2) MFI > 100 and 3) SA > 3 times baseline SA. <!--- confirm ---> If total antibody at baseline was missing, baseline SA was calculated as the median SA of unvaccinated samples from 076, 086, 088, 096, 097, and 205 combined. . <!--- As of Nov 2019, thresholds are based on these 6 protocols. for efficacy trials, plan to calculate protocol-specific thresholds. When data arrive from new phase 1 protocols, confirm with Yunda, Sue, and Tomaras lab that thresholds need not be recalculated.  --->
+
+Tables show positive response rates and corresponding 95% confidence intervals calculated by the Wilson score method [@AgCo1998], as well as summary statistics among positive responders and all participants. 
+
+<!--- If statistical tests are used to compare responses, describe here. Follow protocol and assay specific SAP. Specify software and, if relevant, function or PROC options. example: ---> Barnard’s test was used to compare response rates between treatment groups, while the Wilcoxon rank sum test was used to compare response magnitudes between treatment groups, among positive and negative responders, and among the subset of positive responders. <!--- if comparisons will not be done if there are few responders, say so here and include the cutoff, e.g. Response magnitude comparisons among positive responders will not be done if there are fewer than 5 responders per treatment group. ---><!--- Note some protocols specify Fisher's exact test, but the faculty have decided to use Barnard's as the default. Suggested language for this scenario: Fisher’s exact test (specified as the primary analysis in the protocol) and Barnard’s test (current standard HVTN SDMC analysis for response rate comparisons) were used to compare response rates between treatment groups, while the Wilcoxon rank sum test was used to compare response magnitudes between the pooled treatment groups, among all participants and among the subset of positive responders. --->
+
+<!--- Serum/Plasma specimens --->Net MFI responses at the <!--- add the dilution level ---> dilution level were used to summarize the magnitude at a given time-point.  These distributions are displayed graphically by treatment arm. <!--- if mucosal, delete previous 2 sentences and refer to SA: The distribution of specific activity is displayed graphically by treatment arm and time-point. ---> Plots include data from responders in color and non-responders in gray, with box plots based on data from responders superimposed on the distribution. <!--- if spaghetti/boxplot combination, add:---> Data points for each participant are connected by a gray line.  <!--- ---> The mid-line of the box denotes the median and the ends of the box denote the 25th and 75th percentiles.  The whiskers that extend from the top and bottom of the box extend to the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box) or if no value meets this criterion, to the data extremes.
+ 
+<!---  if showing reverse CDFs...no standard language  --->
+
+<!--- If showing AUC-MB plots, note the plots are partial, but calculated AUC-MB covers the whole curve ---> 
+Partial magnitude-breadth (M-B) plots characterize the magnitude and breadth of each individual plasma sample assayed against a panel of antigens [@Huang2009-ao]. Magnitude is net MFI, and breadth is the number of antigens with positive response at a given value of net MFI (>100). The x-axis represents the response magnitude on the log10 scale and the y-axis represents the fraction of antigens with response magnitude greater than the x-axis value. The antigen-specific net MFI value of a negative responder is set to 100. Plots are left-truncated at 2 on the log10 scale (i.e. net MFI = 100), the lower limit of the linear range of the BAMA assay. In addition to the individual subject-specific curves, the group-specific curve displays the average M-B across all subjects in that group. <!--- If AUC-MB also calculated and not just shown, include the following. ---> AUC-MB was calculated as the area under the MB-curves over the entire range without truncation, which is equivalent to the average of the log10 net MFI over the panel of antigens.
+
+<!--- If working with durability data and calculating fold change from peak, be sure to specify direction of difference, e.g.  log10(durability visit) - log10(peak visit). --->
+
+## PARTICIPANT COHORT  
+<!--- this section summarizes available assay data by ppts and visit. If there are not too many antigens, also summarize assay results excluded from analysis due to failing QC criteria. For reference, we often do this for ICS as there are relatively few ways to fail QC, but not for BAMA due to the many antigens. --->
+
+<!--- note that much of this information is in the expectations table in the assay PT report. HIV acquisitions are reported in the data filtering tables later on, so don't forget to look for those. --->
+
+The study enrolled <!---describe the total number enrolled to date and – if unblinded - the number in each treatment arm--->.  <!--- insert a table to tabulate available and missing data. similar to schema, may use an R chunk and kable(), or plain markdown as shown below. Introduce with the sentence. --->Data available for analysis <!---if appropriate, add: and assay data excluded from analysis---> are summarized in the table below.
+
+<!--- 
+For BAMA, only include ptid*visit level; have to go to antigen level to match denominators and that table would be too lengthy.
+
+The example table below is typed manually. In general it is recommended the table is prepared programmatically.
+--->
+
+| Visit (month)    |  Group     |   Data available     |    Reason for unavailability   |
+|------------------|------------|----------------------|--------------------------------|
+|     10 (6.5)     |   P1-P4    |          9           |          -                     |
+|                  |    T1      |          4           |  1 HIV acquisition             | 
+|                  |    T2      |         20           |  1 missed visit                |
+
+
+
+## RESULTS  
+
+
+<!--- Acknowledgements and references in a separate Rmd --->
+<!--- to start acknowledgements and references on a new page, use \clearpage --->
+
