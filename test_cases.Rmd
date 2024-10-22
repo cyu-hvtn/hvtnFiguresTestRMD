@@ -114,24 +114,9 @@ assay_sec_rd <- set_variable("assay_sec_rd", assay)
 ```
 
 
-```{r memo_text, child = "memo.Rmd", warning=F, message=F}
-```
-
-
-```{r acknowledgement_text, child = "acknowledgements.Rmd", warning=F, message=F}
-```
-
-
 ```{r dataio, eval = doctype != "docx"}
 
 lum <-  hvtnReports::mock_bama 
- 
-ics <- hvtnReports::mock_ics 
-# %>% 
-#   mutate(plots=paste0(tcellsub, "_", visitno), xvar=paste0(rx_code, "_", antigen),
-#          pages=gsub("g", "-*gamma*", cytokine),
-#          pages=gsub("TNFa", "*TNF[a]*", pages),
-#          groups=ifelse(rx_code=="P1", "Placebo", "Vaccine"))
 
 ```
 
@@ -238,6 +223,9 @@ figure_cap<-function(figurename,pageby_value=NULL,appendix_fig_num_prefix="") {
 \clearpage
 \captionsetup[figure]{labelformat=empty, font=Large, labelfont=Large}
 
+
+<!-- Example 1: Standard boxplot figure, separate panels by antigen. --> 
+
 ```{r results="asis", eval = doctype != "docx"}
 
 case <- pt_plot(dat=lum, 
@@ -250,8 +238,9 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)", #NOTE: %s is missing in output 
               page.footnote = "Standard boxplot figure. Only showing the first two pages (test.pages = 1:2).",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -275,6 +264,8 @@ pt_draw(case)
 ```
 
 
+<!-- Example 2: Standard lineplot figure. Lines connecting ppt dots. --> 
+
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
@@ -289,7 +280,7 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Standard lineplot figure. Dots connected by ptid.\nx-axis labels are: Visit 5, Visit 7, Visit 11, (as x.lb=\"Visit %%s\").\nPage title showing correctly (underscore is special character in latex titles. Only showing the first page (test.pages = 1).",
               cutoff.lower=100,
               cutoff.upper=22000,
@@ -298,7 +289,7 @@ case <- pt_plot(dat=lum,
               test.pages = 1)
 
 
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response to %s"),
                        caption_short="lineplot (pos. response boxplots)")
 
 fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
@@ -314,6 +305,7 @@ pt_draw(case)
 
 
 
+<!-- Example 3: Boxplot figure. Not defining y-axis cutoff and breaks -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -327,7 +319,7 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Not defining y-axis cutoff and breaks",
               # cutoff.lower=100,
               # cutoff.upper=22000,
@@ -351,6 +343,8 @@ pt_draw(case)
 ```
 
 
+<!-- Example 4: Magnitude boxplot only, no responder counts. -->
+
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
@@ -362,7 +356,7 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Showing magnitude boxplots only (Not defining resp). Only total counts are shown on top of the plots",
               test.pages = 1)
 
@@ -382,6 +376,8 @@ pt_draw(case)
 ```
 
 
+<!-- Example 5: Magnitude boxplot only, with responder counts and lines connecting ppt dots. -->
+
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
@@ -396,12 +392,12 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Showing magnitude lineplots only (resp.plot=F). Dots are connected.\nTotal and RESPONDER counts are shown on top of the plots. Plot titles are shown.",
+              y.title = "%s net MFI (MFI-blank)",
+              page.footnote = "Showing magnitude lineplots only (resp.plot=F). Dots are connected.\nTotal and responder counts are shown on top of the plots. Plot titles are shown.",
               test.pages = 1)
 
 
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response to %s"),
                        caption_short="lineplot (pos. response boxplots)")
 
 fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
@@ -414,6 +410,8 @@ fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
 pt_draw(case)
 
 ```
+
+<!-- Example 6: Response rate barplot only. -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -429,8 +427,8 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Showing response rate barplots only (mag.plot=F). Dots are connected.\nTotal and RESPONDER counts are shown on top of the plots. Plot titles are shown.",
+              y.title = "%s net MFI (MFI-blank)",
+              page.footnote = "Showing response rate barplots only (mag.plot=F). \nTotal and responder counts are shown on top of the plots. Plot titles are shown.",
               test.pages = 1)
 
 
@@ -449,6 +447,8 @@ pt_draw(case)
 ```
 
 
+<!-- Example 7: Standard boxplot figure, x-axis labels are treatment arms and grouped by antigen. -->
+
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
@@ -461,8 +461,9 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "x-axis labels are treatment arms and grouped by antigen",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -485,7 +486,7 @@ pt_draw(case)
 ```
 
 
-
+<!-- Example 8: Standard boxplot figure, x-axis labels are treatment arms (treatment labels not shown) and grouped by antigen. -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -500,8 +501,9 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "x-axis labels are treatment arms and grouped by antigen, treatment labels not shown (groupby.add=F)",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -524,6 +526,8 @@ pt_draw(case)
 ```
 
 
+<!-- Example 9: Standard lineplot figure, x-axis labels are visit numbers and grouped by treatment arm. -->
+
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
@@ -537,8 +541,9 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "x-axis labels are visitno and grouped by antigen in lineplots",
+              y.title = "%s net MFI (MFI-blank)",
+              page.footnote = "x-axis labels are visitno and grouped by treatment arm in lineplots",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -546,7 +551,7 @@ case <- pt_plot(dat=lum,
               test.pages = 1)
 
 
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response to %s"),
                        caption_short="lineplot (pos. response boxplots)")
 
 fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
@@ -561,12 +566,13 @@ pt_draw(case)
 ```
 
 
+<!-- Example 10: Standard lineplot figure, x-axis labels are visit numbers and grouped by treatment arm (horizontal line above treatment arm). -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
 case <- pt_plot(dat=lum, 
               xvar="visitno",
-              x.lb="Day %s",
+              x.lb="Visit %s",
               groupby = "trt01p",
               group.lb = "Group: %s",
               yvar="delta",
@@ -580,7 +586,8 @@ case <- pt_plot(dat=lum,
               page.title=" ",
               page.title.off = F,
               y.title = "%s Response to %s (MFI-blank)",
-              page.footnote = "x-axis labels are visitno and grouped by antigen in lineplots. y title, x labels, and group labels are showing correctly (%%s Response to %s, Day %%s, Group: %%s).\nBUG (not urgent): 1) page.title can't be \"\" to correctly show x/y titles with %%s. 2) plot.title will be %s when no %s is included.", 
+              page.footnote = "x-axis labels are visitno and grouped by treatment arm in lineplots. y title, x labels, and group labels are showing correctly (%%s Response to %s, Visit %%s, Group: %%s).\nBUG (not urgent): 1) page.title can't be \"\" to correctly show x/y titles with %%s. 2) plot.title will be %s when no %%s is included.", #NOTE: bug and %s is not shown 
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -601,6 +608,9 @@ fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
 pt_draw(case)
 
 ```
+
+
+<!-- Example 11: Boxplots based on all participants. Response rate barplots with 95% CI. -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -616,8 +626,9 @@ case <- pt_plot(dat=lum,
               resp.bar = 1, 
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Boxplots based on all participants. Response rate barplots with 95%% CI.",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -640,6 +651,9 @@ pt_draw(case)
 
 ```
 
+
+
+<!-- Example 12: No individual magnitude dots in magnitude boxplots (based on positive responders). -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -655,8 +669,9 @@ case <- pt_plot(dat=lum,
               dot.size = 0,
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Only showing boxplots, no individual magnitude dots (dot.size=0).",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -679,6 +694,7 @@ pt_draw(case)
 ```
 
 
+<!-- Example 13: Only showing individual magnitude dots. -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -694,8 +710,9 @@ case <- pt_plot(dat=lum,
               box.col = "white",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Only showing individual magnitude dots, no boxplots (box.col=\"white\")",
+              y.lims = c(100,22000),
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
@@ -719,86 +736,7 @@ pt_draw(case)
 ```
 
 
-
-```{r results="asis", eval = doctype != "docx"}
-fig_num <- fig_num + 1
-case <- pt_plot(dat=lum, 
-              xvar="trt01p",
-              groupby = "antigen",
-              yvar="delta",
-              pts="pub_id",
-              resp="response",
-              pageby = c("isotype", "visitno"),
-              plot.title = "%s",
-              resp.bar = 1, 
-              box.col = "white",
-              colby = "trt01p",
-              rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Only showing individual magnitude dots, no boxplots (box.col=\"white\")",
-              cutoff.lower=100,
-              cutoff.upper=22000,
-              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
-              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
-              test.pages = 1)
-
-
-
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
-                       caption_short="boxplot (pos. response boxplots)")
-
-fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
-                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
-```
-
-
-```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
-#  By default pt_draw will draw all pages
-pt_draw(case)
-
-```
-
-
-```{r results="asis", eval = doctype != "docx"}
-fig_num <- fig_num + 1
-case <- pt_plot(dat=lum, 
-              xvar="trt01p",
-              groupby = "antigen",
-              yvar="delta",
-              pts="pub_id",
-              resp="response",
-              pageby = c("isotype", "visitno"),
-              plot.title = "%s",
-              resp.bar = 1, 
-              box.col = "white",
-              colby = "trt01p",
-              rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
-              page.footnote = "Only showing individual magnitude dots, no boxplots (box.col=\"white\")",
-              cutoff.lower=100,
-              cutoff.upper=22000,
-              y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
-              y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
-              test.pages = 1)
-
-
-
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
-                       caption_short="boxplot (pos. response boxplots)")
-
-fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
-                             lapply(case, function(x) gsub("_", "\\_", x$pageby_value, fixed = T)))
-```
-
-
-```{r eval = paste0("case", fig_num) %in% names(tlf) & doctype != "docx", fig.cap=fig_caps[[paste0("case", fig_num)]]$caption, fig.scap=fig_caps[[paste0("case", fig_num)]]$caption_short, results = "asis"}
-#  By default pt_draw will draw all pages
-pt_draw(case)
-
-```
-
-
-
+<!-- Example 14: Rotated x labels -->
 
 ```{r results="asis", eval = doctype != "docx"}
 fig_num <- fig_num + 1
@@ -813,18 +751,18 @@ case <- pt_plot(dat=lum,
               plot.title = "%s",
               colby = "trt01p",
               rx.ctrl = "P",
-              y.title = "%s binding antibody units (MFI-blank)",
+              y.title = "%s net MFI (MFI-blank)",
               page.footnote = "Grouped rotating x labels ",
               cutoff.lower=100,
               cutoff.upper=22000,
               y.brk.major=c(100,1000,2000,3000,5000,10000,22000),
               y.brk.minor=c(seq(200,900,100),seq(1000,9000,by=1000)),
-              x.lb="Month %s",
+              x.lb="Visit %s",
               x.lb.angle = 45,
               test.pages = 1)
 
 
-tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response at Visit %s"),
+tlf[[paste0("case", fig_num)]] <- list(caption=paste0(protname_short,": %s Response to %s"),
                        caption_short="lineplot (pos. response boxplots)")
 
 fig_caps[[paste0("case", fig_num)]]<-figure_cap(paste0("case", fig_num),
